@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreamer N?</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #ffffff;
+      background-color: #05060a;
+      /* Если загрузишь свою картинку фона в репозиторий как bg.jpg, раскомментируй строку ниже: */
+      /* background: url('bg.jpg') center/cover no-repeat fixed; */
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 75% 30%, #fff, transparent),
+        radial-gradient(2px 2px at 85% 80%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 25% 85%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 60% 15%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(circle at 50% 0%, #14192d 0%, #05060a 75%);
+      background-size: 350px 350px, 420px 420px, 290px 290px, 500px 500px, 310px 310px, 460px 460px, 100% 100%;
+      display: flex;
+      justify-content: center;
+      padding: 48px 16px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      margin-bottom: 16px;
+      background: #141722;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .link-btn {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .link-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Загрузи картинку avatar.jpg в репозиторий или вставь прямую ссылку на фото в src -->
+    <img id="avatar" class="avatar" src="" alt="Avatar" style="display:none;" />
+    <h1 id="title"></h1>
+    <p id="subtitle" class="subtitle"></p>
+    <div id="links" class="links"></div>
+  </div>
 
+  <script>
+    // ================= НАСТРОЙКИ СТРАНИЦЫ =================
+    const PAGE = {
+      title: "Dreamer N?",
+      subtitle: "Music • Photography • Projects",
+      avatar: "avatar.jpg", // Имя файла аватарки в репозитории (оставь "", если пока без фото)
+      links: [
+        { text: "Telegram",    url: "https://t.me/...",         color: "#229ED9" },
+        { text: "Instagram",   url: "https://instagram.com/...",color: "#C13584" },
+        { text: "TikTok",      url: "https://tiktok.com/@...",  color: "#1f1f23" },
+        { text: "SoundCloud",  url: "https://soundcloud.com/...",color: "#d94e1f" },
+        { text: "Spotify",     url: "https://open.spotify.com/...", color: "#1DB954" }
+      ]
+    };
+    // ======================================================
+
+    document.title = PAGE.title;
+    document.getElementById("title").textContent = PAGE.title;
+    document.getElementById("subtitle").textContent = PAGE.subtitle;
+
+    const avatarEl = document.getElementById("avatar");
+    if (PAGE.avatar) {
+      avatarEl.src = PAGE.avatar;
+      avatarEl.onerror = () => { avatarEl.style.display = "none"; };
+      avatarEl.style.display = "block";
+    }
+
+    const linksContainer = document.getElementById("links");
+    PAGE.links.forEach(item => {
+      const a = document.createElement("a");
+      a.className = "link-btn";
+      a.href = item.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = item.text;
+      a.style.backgroundColor = item.color || "#262936";
+      linksContainer.appendChild(a);
+    });
+  </script>
+</body>
+</html>
