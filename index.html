@@ -16,7 +16,6 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: #ffffff;
       background-color: #050505;
-      background-image: url("bg.jpg");
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
@@ -95,7 +94,7 @@
 </head>
 <body>
   <div class="container">
-    <img id="avatar" class="avatar" src="avatar.jpg" alt="Dreamer N?" />
+    <img id="avatar" class="avatar" src="" alt="Dreamer N?" />
     <h1 id="title"></h1>
     <p id="subtitle" class="subtitle"></p>
     <div id="links" class="links"></div>
@@ -105,37 +104,68 @@
     // ================= НАСТРОЙКИ СТРАНИЦЫ =================
     const PAGE = {
       title: "Dreamer N?",
-      subtitle: "☽ ALL ☬",
-      avatar: "avatar.jpg",
+      subtitle: "☽ ALL ⍉",
+      avatar: "Main. Profile pic. Main_00000.jpg",
+      background: "Main. Background_00000.jpg",
       links: [
         {
-          text: "☽ NEW RELEASE - The present slips away, yet the future never arrives ☬",
-          url: "#",
+          text: "☽ NEW RELEASE - The present slips away, yet the future never arrives ⍉",
+          url: "https://fanlink.tv/hi_new_release_now",
           bg: "#FFFFFF",
           color: "#000000"
         },
         {
-          text: "☽ Subproject. Sky & clouds ☬",
-          url: "#",
-          bg: "#595959",
+          text: "☽ Subproject. Sky & clouds ⍉",
+          url: "http://dnu_sky_and_clouds",
+          bg: "#666666",
           color: "#FFFFFF"
         },
         {
-          text: "☽ Subproject. Cherry Music Covers ☬",
-          url: "#",
-          bg: "#595959",
+          text: "☽ Subproject. Cherry Music Covers ⍉",
+          url: "https://t.me/cherry_music_covers",
+          bg: "#666666",
           color: "#FFFFFF"
         },
         {
           text: "Instagram",
-          url: "https://instagram.com/",
-          bg: "#EC00BC",
+          url: "https://www.instagram.com/dreamer_n_unknown/",
+          bg: "#EA01C4",
           color: "#FFFFFF"
         },
         {
           text: "Spotify",
-          url: "https://open.spotify.com/",
-          bg: "#1ED760",
+          url: "https://open.spotify.com/artist/1aKn1IGyVH8NzdbbzGgRhx",
+          bg: "#1DD05D",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Youtube",
+          url: "https://www.youtube.com/channel/UCDtxjoC4v3pyOYP9qmRimKg",
+          bg: "#FF0000",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Apple Music",
+          url: "https://music.apple.com/ru/artist/dreamer-n/1470961701",
+          bg: "#FA2A42",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Soundcloud",
+          url: "https://soundcloud.com/dreamer_n_unknown",
+          bg: "#F75219",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Telegram",
+          url: "https://t.me/dreamer_n_unknown",
+          bg: "#2FA3D9",
+          color: "#FFFFFF"
+        },
+        {
+          text: "E-mail: dreamer.n.unknown@gmail.com",
+          url: "mailto:dreamer.n.unknown@gmail.com",
+          bg: "#32517A",
           color: "#FFFFFF"
         }
       ]
@@ -146,21 +176,29 @@
     document.getElementById("title").textContent = PAGE.title;
     document.getElementById("subtitle").textContent = PAGE.subtitle;
 
+    if (PAGE.background) {
+      document.body.style.backgroundImage = `url("${encodeURI(PAGE.background)}")`;
+    }
+
     const avatarEl = document.getElementById("avatar");
-    avatarEl.src = PAGE.avatar;
-    avatarEl.onerror = () => { avatarEl.style.display = "none"; };
+    if (PAGE.avatar) {
+      avatarEl.src = encodeURI(PAGE.avatar);
+      avatarEl.onerror = () => { avatarEl.style.display = "none"; };
+    } else {
+      avatarEl.style.display = "none";
+    }
 
     const linksContainer = document.getElementById("links");
     PAGE.links.forEach(item => {
       const a = document.createElement("a");
       a.className = "link-btn";
       a.href = item.url || "#";
-      if (item.url && item.url !== "#") {
+      if (item.url && item.url !== "#" && !item.url.startsWith("mailto:")) {
         a.target = "_blank";
         a.rel = "noopener noreferrer";
       }
       a.textContent = item.text;
-      a.style.backgroundColor = item.bg || "#595959";
+      a.style.backgroundColor = item.bg || "#666666";
       a.style.color = item.color || "#FFFFFF";
       linksContainer.appendChild(a);
     });
