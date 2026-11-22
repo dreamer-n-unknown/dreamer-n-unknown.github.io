@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dreamer N? — The present slips away, yet the future never arrives</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+      background-color: #050505;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      padding: 56px 20px 64px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 22px;
+      display: block;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #ffffff;
+      margin-bottom: 34px;
+      letter-spacing: 0.3px;
+    }
+
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 62px;
+      padding: 16px 24px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.12s ease, filter 0.15s ease;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.08);
+    }
+
+    .link-btn:active {
+      transform: translateY(0);
+    }
+
+    .link-btn.is-static {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .link-note {
+      width: 100%;
+      padding: 4px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      opacity: 0.85;
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="avatar" class="avatar" src="" alt="Dreamer N?" />
+    <h1 id="title"></h1>
+    <p id="subtitle" class="subtitle"></p>
+    <div id="links" class="links"></div>
+  </div>
+
+  <script>
+    // ================= НАСТРОЙКИ СТРАНИЦЫ =================
+    const PAGE = {
+      title: "Dreamer N?",
+      subtitle: "The present slips away, yet the future never arrives",
+      avatar: "../Main. Profile pic. Main_00000.jpg",
+      background: "new_release.jpg",
+      links: [
+        {
+          text: "Spotify",
+          url: "https://open.spotify.com/track/4lzQAPv0GTfROs6ECpWqJU",
+          bg: "#1DD05D",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Youtube",
+          url: "https://youtu.be/BBzbsQaQmGM",
+          bg: "#FF0000",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Soundcloud",
+          url: "https://soundcloud.com/dreamer_n_unknown/dreamer-n-the-past-slips-away-yet-the-future-never-arrives",
+          bg: "#F75219",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Youtube Music",
+          url: "https://music.youtube.com/watch?v=EZeAMWNGGyA&si=U_quj1ps6tRJjYFy",
+          bg: "rgb(255, 37, 0)",
+          color: "#FFFFFF"
+        },
+        {
+          text: "Bandcamp",
+          url: "https://dreamer-n-unknown.bandcamp.com/track/the-past-slips-away-yet-the-future-never-arrives",
+          bg: "rgb(60, 154, 170)",
+          color: "#FFFFFF"
+        },
+        {
+          text: "...and other platforms."
+        }
+      ]
+    };
+    // ======================================================
+
+    document.title = `${PAGE.title} — ${PAGE.subtitle}`;
+    document.getElementById("title").textContent = PAGE.title;
+    document.getElementById("subtitle").textContent = PAGE.subtitle;
+
+    if (PAGE.background) {
+      document.body.style.backgroundImage = `url("${encodeURI(PAGE.background)}")`;
+    }
+
+    const avatarEl = document.getElementById("avatar");
+    if (PAGE.avatar) {
+      avatarEl.src = encodeURI(PAGE.avatar);
+      avatarEl.onerror = () => { avatarEl.style.display = "none"; };
+    } else {
+      avatarEl.style.display = "none";
+    }
+
+    const linksContainer = document.getElementById("links");
+    PAGE.links.forEach(item => {
+      if (!item.url) {
+        const div = document.createElement("div");
+        div.textContent = item.text;
+        if (item.bg) {
+          div.className = "link-btn is-static";
+          div.style.backgroundColor = item.bg;
+          div.style.color = item.color || "#FFFFFF";
+        } else {
+          div.className = "link-note";
+          if (item.color) div.style.color = item.color;
+        }
+        linksContainer.appendChild(div);
+        return;
+      }
+
+      const a = document.createElement("a");
+      a.className = "link-btn";
+      a.href = item.url;
+      a.textContent = item.text;
+      a.style.backgroundColor = item.bg || "#666666";
+      a.style.color = item.color || "#FFFFFF";
+
+      if (!item.sameTab) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+
+      linksContainer.appendChild(a);
+    });
+  </script>
+</body>
+</html>
