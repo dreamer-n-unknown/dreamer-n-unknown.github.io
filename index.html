@@ -79,6 +79,8 @@
       font-weight: 700;
       line-height: 1.45;
       letter-spacing: 0.2px;
+      cursor: pointer;
+      user-select: none;
       transition: transform 0.12s ease, filter 0.15s ease;
     }
 
@@ -164,7 +166,8 @@
         },
         {
           text: "E-mail: dreamer.n.unknown@gmail.com",
-          url: "mailto:dreamer.n.unknown@gmail.com",
+          copy: "dreamer.n.unknown@gmail.com",
+          copiedText: "E-mail copied!",
           bg: "#32517A",
           color: "#FFFFFF"
         }
@@ -188,18 +191,50 @@
       avatarEl.style.display = "none";
     }
 
+    function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return Promise.resolve();
+    }
+
     const linksContainer = document.getElementById("links");
     PAGE.links.forEach(item => {
       const a = document.createElement("a");
       a.className = "link-btn";
-      a.href = item.url || "#";
-      if (item.url && item.url !== "#" && !item.url.startsWith("mailto:")) {
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-      }
       a.textContent = item.text;
       a.style.backgroundColor = item.bg || "#666666";
       a.style.color = item.color || "#FFFFFF";
+
+      if (item.copy) {
+        a.href = "#";
+        let timer;
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          copyToClipboard(item.copy).then(() => {
+            a.textContent = item.copiedText || "Copied!";
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+              a.textContent = item.text;
+            }, 2000);
+          });
+        });
+      } else {
+        a.href = item.url || "#";
+        if (item.url && item.url !== "#") {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
+      }
+
       linksContainer.appendChild(a);
     });
   </script>
